@@ -148,17 +148,14 @@ def sendTweet(mic,api):
 
 def handle(text, mic, profile):
 	
-	# Put in profile
-	#consumer_key="GHV8zivddPkzXVk46dFmwZINU"
 	consumer_key = profile['keys']["TW_CONSUMER_KEY"]
-	#consumer_secret="XsrFbJHvdt747OgIBUaSw3mbzlGYBBRnU52NoPt6z2HEOBzPOy"
+	
 	consumer_secret = profile['keys']["TW_CONSUMER_SECRET"]
-	#access_token="321010445-BCJBvfWJFlyBjE3KV9iagQ6H9M0UxX82xywugWBd"
+	
 	access_token = profile['keys']["TW_ACCESS_TOKEN"]
-	#access_token_secret="M55RbN6lQItUxxd9WE0Au0hQDqwjis6nof0kNmQxlFdop"
+	
 	access_token_secret = profile['keys']["TW_ACCESS_TOKEN_SECRET"]
 
-	# To be put in profile
 
 	auth = OAuthHandler(consumer_key, consumer_secret)
 
