@@ -8,6 +8,8 @@ import sys
 import time
 import re
 
+# Written by Marc Laventure
+
 WORDS = ["TWITTER", "TWITTER NOTIFICATIONS", "DIRECT MESSAGE", "FEED", "TWEET"] # To be changed...
 
 PRIORITY = 1
