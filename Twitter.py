@@ -8,9 +8,9 @@ import sys
 import time
 import re
 
-# Written by Marc Laventure
+# Written by Marc Laventure 
 
-WORDS = ["TWITTER", "TWITTER NOTIFICATIONS", "DIRECT MESSAGE", "FEED", "TWEET"] # To be changed...
+WORDS = ["TWITTER", "TWITTER NOTIFICATIONS", "DIRECT MESSAGE", "FEED", "TWEET"] 
 
 PRIORITY = 1
 
@@ -18,21 +18,14 @@ PRIORITY = 1
 def getNotifications(mic,latestRetweet,latestMention,latestDirectMessage, api):
 	
 	latestRetweets = []
-
 	latestRetweetsID = []
-
 	latestDirectMessages = []
-
 	latestDirectMessagesID = []
-	
 	latestMentions = []
-
 	latestMentionsID = []
 	
 	mentions = api.mentions_timeline()
-
 	retweets = api.retweets_of_me()
-
 	directMessages = api.direct_messages()
 	
 	for mention in mentions:
@@ -51,69 +44,47 @@ def getNotifications(mic,latestRetweet,latestMention,latestDirectMessage, api):
 			latestDirectMessagesID.append(directMessage.id)
 
 	if len(latestRetweets) > 0:
-
 		mic.say("Latest Retweets are")
-
 		for retweetFinal in latestRetweets:
 			mic.say(retweetFinal.text + " by " + retweetFinal.user.screen_name) 
 
 		latestRetweetsID.sort()
-
 		latestRetweet = latestRetweetsID[-1]
-
 		retweetsIDFile = open('retweetsIDFile.txt', 'w')
-
 		retweetsIDFile.write(str(latestRetweet))
-
 		retweetsIDFile.close()
 		
-
 	else:
-		
 		mic.say("You have no retweets")
 
 	if len(latestMentions) > 0:
-		
 		mic.say("Latest Mentions are")
 		
 		for mentionFinal in latestMentions:
-		
 			mic.say(mentionFinal.text + " from " + mentionFinal.user.screen_name)
 
 		latestMentionsID.sort()
-		
 		latestMention = latestMentionsID[-1]
-
 		mentionIDFile = open('mentionIDFile.txt', 'w')
-
 		mentionIDFile.write(str(latestMention))
-
 		mentionIDFile.close()
 	
 	else:
-		
 		mic.say("You have no mentions")
 
 	if len(latestDirectMessages) > 0:
-
 		mic.say("Latest Direct Messages are")
-
+		
 		for directMessageFinal in latestDirectMessages:
-
 			mic.say(directMessageFinal.text + " from " + directMessageFinal.user.screen_name)
 
 		latestDirectMessagesID.sort()
-
 		latestDirectMessage = latestDirectMessagesID[-1]
-
 		directMessageIDFile = open('directMessageID.txt', 'w')
-
 		directMessageIDFile.write(str(latestDirectMessage))
-		
 		directMessageIDFile.close()
 
 	else:
-
 		mic.say("You have no Direct Messages")
 
 	return
@@ -123,15 +94,10 @@ def getWhatsTrending(mic,api):
 
 	# mic.say
 	data = api.trends_place(1) # Grabs global trends
-
 	trends = data[0]['trends']
-
 	for trend in trends:
-		
 		name = trend['name'] #Grabs name of each trend
-		
 		if name.startswith('#'):
-
 			mic.say(name) #Only grabs hashtags
 
 # No input needed
@@ -141,30 +107,21 @@ def sendTweet(mic,api):
 	#Command line input for debugging sakes
 
 	mic.say("What would you like to tweet?")
-
 	tweet = mic.activeListen()
-	
 	api.update_status(tweet)
 
 def handle(text, mic, profile):
 	
 	consumer_key = profile['keys']["TW_CONSUMER_KEY"]
-	
 	consumer_secret = profile['keys']["TW_CONSUMER_SECRET"]
-	
 	access_token = profile['keys']["TW_ACCESS_TOKEN"]
-	
 	access_token_secret = profile['keys']["TW_ACCESS_TOKEN_SECRET"]
 
 
 	auth = OAuthHandler(consumer_key, consumer_secret)
-
 	auth.set_access_token(access_token, access_token_secret)
-
 	api = tweepy.API(auth)
-
 	myTwitterID = api.me().id
-
 	directMessages = api.direct_messages(count=1)
 
 	try:
@@ -209,21 +166,17 @@ def handle(text, mic, profile):
 
 
 	if bool(re.search(r'\bTweet\b', text, re.IGNORECASE)):
-
 		sendTweet(mic, api)
 
 	if bool(re.search(r'\btwitter notifications\b', text, re.IGNORECASE)):
-
 		getNotifications(mic,latestRetweet,latestMention,latestDirectMessage, api)
 
 	if bool(re.search(r'\btrending\b', text, re.IGNORECASE)):
-
 		getWhatsTrending(mic, api)
 
 def isValid(text):
 	
 	tweetBool = bool(re.search(r'\bTweet\b', text, re.IGNORECASE))
-
 	twitterBool = bool(re.search(r'\bTwitter\b', text, re.IGNORECASE))
 
 	if tweetBool:
