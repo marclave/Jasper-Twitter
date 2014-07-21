@@ -168,7 +168,7 @@ def handle(text, mic, profile):
 	if bool(re.search(r'\bTweet\b', text, re.IGNORECASE)):
 		sendTweet(mic, api)
 
-	if bool(re.search(r'\btwitter notifications\b', text, re.IGNORECASE)):
+	if bool(re.search(r'\bnotifications?\b', text, re.IGNORECASE)):
 		getNotifications(mic,latestRetweet,latestMention,latestDirectMessage, api)
 
 	if bool(re.search(r'\btrending\b', text, re.IGNORECASE)):
