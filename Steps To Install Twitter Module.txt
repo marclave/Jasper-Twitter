@@ -1,6 +1,7 @@
 steps to install Twitter.py:
 
 1. run:
+	sudo pip install -U pip
 	sudo pip install tweepy
 
 2. Go to https://apps.twitter.com/ and make a twitter application for jasper
